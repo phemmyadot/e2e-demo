@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LoginForm from '../components/LoginForm';
+---
+<Layout title="Sign in" protected={false}>
+  <div class="center" style="padding-top: 12vh">
+    <div style="font-size: 56px" aria-hidden="true">🛍️</div>
+    <h1>Welcome to ShopDemo</h1>
+    <p class="muted">Sign in to continue</p>
+  </div>
+  <LoginForm client:only="react" />
+</Layout>

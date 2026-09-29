@@ -1,0 +1,22 @@
+---
+// Product pages are pre-rendered at build time (static HTML); only the button is interactive.
+import Layout from '../../layouts/Layout.astro';
+import AddToCartButton from '../../components/AddToCartButton';
+import { PRODUCTS, formatPrice, type Product } from '../../lib/services';
+import { TID } from '../../lib/testIds';
+
+export function getStaticPaths() {
+  return PRODUCTS.map((product) => ({ params: { id: product.id }, props: { product } }));
+}
+const { product } = Astro.props as { product: Product };
+---
+<Layout title={product.name}>
+  <article class="stack" data-testid={TID.product.screen}>
+    <a href="/" data-testid={TID.product.back}>‹ Discover</a>
+    <div class="card center" style="font-size: 96px; padding: 32px" aria-hidden="true">{product.emoji}</div>
+    <h1 data-testid={TID.product.name}>{product.name}</h1>
+    <p style="font-size: 22px" data-testid={TID.product.price}>{formatPrice(product.priceCents)}</p>
+    <p class="muted" data-testid={TID.product.description}>{product.summary}</p>
+    <AddToCartButton client:only="react" productId={product.id} />
+  </article>
+</Layout>

@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+import TabBar from '../components/TabBar';
+import { SESSION_KEY } from '../lib/stores';
+
+interface Props {
+  title: string;
+  /** Pages behind the auth gate. Defaults to true; the login page opts out. */
+  protected?: boolean;
+}
+const { title, protected: isProtected = true } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · ShopDemo</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {isProtected && (
+      <script is:inline define:vars={{ SESSION_KEY }}>
+        // Auth gate: runs before first paint so protected content never flashes.
+        let session = null;
+        try { session = JSON.parse(localStorage.getItem(SESSION_KEY) ?? 'null'); } catch {}
+        if (!session) location.replace('/login?next=' + encodeURIComponent(location.pathname));
+      </script>
+    )}
+  </head>
+  <body>
+    <main class="page">
+      <slot />
+    </main>
+    {isProtected && <TabBar client:only="react" active={Astro.url.pathname} />}
+  </body>
+</html>

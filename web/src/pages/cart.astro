@@ -1,0 +1,9 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CartView from '../components/CartView';
+import { TID } from '../lib/testIds';
+---
+<Layout title="Cart">
+  <h1>Cart</h1>
+  <div data-testid={TID.cart.screen}><CartView client:only="react" /></div>
+</Layout>
