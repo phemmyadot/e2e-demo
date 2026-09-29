@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ShopDemo</string>
+    <string name="login_title">Welcome to ShopDemo</string>
+    <string name="login_subtitle">Sign in to continue</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_submit">Sign In</string>
+    <string name="login_hint">Hint: demo@shop.com / password123</string>
+</resources>
