@@ -9,7 +9,7 @@ ADB="$SDK/platform-tools/adb"
 AVD="${AVD:-ShopDemo_Pixel_API_34}"
 
 if ! "$ADB" devices | grep -qE "device$"; then
-  echo "Starting emulator $AVD…"
+  echo "Starting emulator ${AVD}..."
   nohup "$SDK/emulator/emulator" -avd "$AVD" -no-snapshot-save >/dev/null 2>&1 &
   "$ADB" wait-for-device
   until [[ "$("$ADB" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" == "1" ]]; do sleep 2; done
